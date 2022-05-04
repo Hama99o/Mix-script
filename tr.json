@@ -228,7 +228,6 @@
           "query",
           "hits"
         ],
-        "enableABTest": false,
         "explain": [
           "match.alternatives",
           "params.client",
