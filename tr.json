@@ -1,0 +1,244 @@
+{
+  "hits": [
+    {
+      "id": 17,
+      "slug": "question-for-test",
+      "body": "question for test",
+      "live": false,
+      "image": {
+        "url": null,
+        "thumb": {
+          "url": null
+        }
+      },
+      "alternative_keywords": "",
+      "publish_date": "2021-12-01",
+      "is_public": false,
+      "highligted_quick_reply": "oui",
+      "highligted_percentage": null,
+      "publish_date_timestamp": 1638313200,
+      "kind": "closed",
+      "categories_with_alternatives": [],
+      "categories_names": [],
+      "open": false,
+      "argument": false,
+      "objectID": "17",
+      "_snippetResult": {
+        "id": {
+          "value": "17",
+          "matchLevel": "none"
+        },
+        "slug": {
+          "value": "question-for-test",
+          "matchLevel": "none"
+        },
+        "body": {
+          "value": "question for test",
+          "matchLevel": "none"
+        },
+        "alternative_keywords": {
+          "value": "",
+          "matchLevel": "none"
+        },
+        "publish_date": {
+          "value": "2021-12-01",
+          "matchLevel": "none"
+        },
+        "highligted_quick_reply": {
+          "value": "oui",
+          "matchLevel": "none"
+        },
+        "publish_date_timestamp": {
+          "value": "1638313200",
+          "matchLevel": "none"
+        },
+        "kind": {
+          "value": "closed",
+          "matchLevel": "none"
+        }
+      },
+      "_highlightResult": {
+        "body": {
+          "value": "question for test",
+          "matchLevel": "none",
+          "matchedWords": []
+        },
+        "alternative_keywords": {
+          "value": "",
+          "matchLevel": "none",
+          "matchedWords": []
+        }
+      },
+      "_rankingInfo": {
+        "nbTypos": 0,
+        "firstMatchedWord": 0,
+        "proximityDistance": 0,
+        "userScore": 20,
+        "geoDistance": 0,
+        "geoPrecision": 0,
+        "nbExactWords": 0,
+        "words": 0,
+        "filters": 0
+      }
+    }
+  ],
+  "nbHits": 21,
+  "page": 0,
+  "nbPages": 3,
+  "hitsPerPage": 10,
+  "facets": {
+    "kind": {
+      "closed": 20,
+      "open": 1
+    },
+    "live": {
+      "false": 15,
+      "true": 6
+    },
+    "is_public": {
+      "false": 17,
+      "true": 4
+    },
+    "categories_names": {
+      "Actualités": 1,
+      "Alimentation": 1,
+      "Environnement": 1,
+      "Shopping": 1,
+      "Société": 1,
+      "Transport": 1,
+      "Voyages": 1
+    }
+  },
+  "exhaustiveFacetsCount": true,
+  "exhaustiveNbHits": true,
+  "exhaustiveTypo": true,
+  "query": "",
+  "params": "highlightPreTag=%3Cais-highlight-0000000000%3E&highlightPostTag=%3C%2Fais-highlight-0000000000%3E&getRankingInfo=true&analytics=false&enableABTest=false&hitsPerPage=10&attributesToRetrieve=*&attributesToSnippet=*%3A20&snippetEllipsisText=%E2%80%A6&responseFields=*&explain=*&query=&maxValuesPerFacet=100&page=0&facets=%5B%22*%22%5D&tagFilters=",
+  "index": "TrendReport_development",
+  "serverUsed": "c8-eu-2.algolia.net",
+  "indexUsed": "TrendReport_development",
+  "parsedQuery": "",
+  "timeoutCounts": false,
+  "timeoutHits": false,
+  "explain": {
+    "match": {
+      "alternatives": []
+    },
+    "params": {
+      "client": {
+        "query": "",
+        "analytics": false,
+        "page": 0,
+        "hitsPerPage": 10,
+        "attributesToRetrieve": [
+          "*"
+        ],
+        "attributesToSnippet": [
+          "*:20"
+        ],
+        "getRankingInfo": true,
+        "highlightPreTag": "<em>",
+        "highlightPostTag": "</em>",
+        "snippetEllipsisText": "…",
+        "tagFilters": [],
+        "facets": [
+          "*"
+        ],
+        "maxValuesPerFacet": 100,
+        "responseFields": [
+          "facets_stats",
+          "extensions",
+          "renderingContent",
+          "userData",
+          "exhaustiveFacetValues",
+          "aroundLatLng",
+          "queryAfterRemoval",
+          "exhaustiveFacetsCount",
+          "length",
+          "facets",
+          "offset",
+          "hitsPerPage",
+          "nbHits",
+          "exhaustiveTypo",
+          "exhaustiveNbHits",
+          "params",
+          "automaticRadius",
+          "processingTimeMS",
+          "nbPages",
+          "page",
+          "index",
+          "query",
+          "hits"
+        ],
+        "enableABTest": false,
+        "explain": [
+          "match.alternatives",
+          "params.client",
+          "params.apiKey",
+          "params.abTest",
+          "params.rules",
+          "params.final"
+        ]
+      },
+      "apiKey": {},
+      "abTest": {},
+      "rules": {},
+      "final": {
+        "query": "",
+        "analytics": false,
+        "page": 0,
+        "hitsPerPage": 10,
+        "attributesToRetrieve": [
+          "*"
+        ],
+        "attributesToSnippet": [
+          "*:20"
+        ],
+        "getRankingInfo": true,
+        "highlightPreTag": "<em>",
+        "highlightPostTag": "</em>",
+        "snippetEllipsisText": "…",
+        "tagFilters": [],
+        "facets": [
+          "*"
+        ],
+        "maxValuesPerFacet": 100,
+        "responseFields": [
+          "facets_stats",
+          "extensions",
+          "renderingContent",
+          "userData",
+          "exhaustiveFacetValues",
+          "aroundLatLng",
+          "queryAfterRemoval",
+          "exhaustiveFacetsCount",
+          "length",
+          "facets",
+          "offset",
+          "hitsPerPage",
+          "nbHits",
+          "exhaustiveTypo",
+          "exhaustiveNbHits",
+          "params",
+          "automaticRadius",
+          "processingTimeMS",
+          "nbPages",
+          "page",
+          "index",
+          "query",
+          "hits"
+        ],
+        "enableABTest": false,
+        "explain": [
+          "match.alternatives",
+          "params.client",
+          "params.apiKey",
+          "params.abTest",
+          "params.rules",
+          "params.final"
+        ]
+      }
+    }
+  },
+  "processingTimeMS": 1
+}
