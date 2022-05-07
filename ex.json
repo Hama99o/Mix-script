@@ -50,35 +50,35 @@
               }
             ],
             "replies_shuffle": true
-          }
-        ],
-        [
-          {
-            "body": "J'ai pas compris, utilise ces boutons là pour répondre 👇",
-            "kind": "quick_replies",
-            "replies": [
-              {
-                "body": "Norman & Kemar 👯",
-                "value": "BAD",
-                "reaction": "Nope de McFly & Carlito, ce qui a été plutôt mal vu par une partie de leur public à l’approche des élections 🤔"
-              },
-              {
-                "body": "Squeezie & Cyprien👯 ",
-                "value": "BAD",
-                "reaction": "Nope de McFly & Carlito, ce qui a été plutôt mal vu par une partie de leur public à l’approche des élections 🤔"
-              },
-              {
-                "body": "Inoxtag & Michou 👯",
-                "value": "BAD",
-                "reaction": "Nope de McFly & Carlito, ce qui a été plutôt mal vu par une partie de leur public à l’approche des élections 🤔"
-              },
-              {
-                "body": "Mcfly & Carlito 👯",
-                "value": "GOOD",
-                "reaction": "Bien joué ! Ça a été plutôt mal vu par une partie de leur public à l’approche des élections 🤔"
-              }
-            ]
-          }
+          },
+          [
+            {
+              "body": "J'ai pas compris, utilise ces boutons là pour répondre 👇",
+              "kind": "quick_replies",
+              "replies": [
+                {
+                  "body": "Norman & Kemar 👯",
+                  "value": "BAD",
+                  "reaction": "Nope de McFly & Carlito, ce qui a été plutôt mal vu par une partie de leur public à l’approche des élections 🤔"
+                },
+                {
+                  "body": "Squeezie & Cyprien👯 ",
+                  "value": "BAD",
+                  "reaction": "Nope de McFly & Carlito, ce qui a été plutôt mal vu par une partie de leur public à l’approche des élections 🤔"
+                },
+                {
+                  "body": "Inoxtag & Michou 👯",
+                  "value": "BAD",
+                  "reaction": "Nope de McFly & Carlito, ce qui a été plutôt mal vu par une partie de leur public à l’approche des élections 🤔"
+                },
+                {
+                  "body": "Mcfly & Carlito 👯",
+                  "value": "GOOD",
+                  "reaction": "Bien joué ! Ça a été plutôt mal vu par une partie de leur public à l’approche des élections 🤔"
+                }
+              ]
+            }
+          ]
         ]
       ]
     }
