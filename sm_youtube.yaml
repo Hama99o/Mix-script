@@ -16,15 +16,6 @@ quiz_youtuber:
           state: state_2
           eval: "MessengerBot::Utils::TemporaryStore.new(~{current_user}, 'quiz_youtuber_score').value = 0"
     - name: state_2
-      main_transition: state_3
-      kind: closed
-      transitions:
-        - postback: GOOD
-          state: state_3
-          eval: "MessengerBot::Utils::TemporaryStore.new(~{current_user}, 'quiz_youtuber_score').value = MessengerBot::Utils::TemporaryStore.new(~{current_user}, 'quiz_youtuber_score').value.to_i + 1"
-        - postback: BAD
-          state: state_3
-    - name: state_3
       main_transition: state_4
       kind: closed
       transitions:
