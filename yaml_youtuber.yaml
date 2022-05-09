@@ -1,0 +1,241 @@
+quiz_youtuber_state_1:
+  - kind: 'reask_messages'
+    messages:
+    - - body: "~{user_first_name}, j’te propose de faire un quiz sur les youtubers !"
+      - kind: 'image'
+        url: 'https://media2.giphy.com/media/B1qj7OfJRBNNOtCSqN/giphy.gif'
+      - kind: typing
+        'off': 3
+        'on': 1
+      - body: "C’est super simple : \n❓ 5 questions \n\U0001F440 Et on voit ton résultat à la fin"
+      - kind: typing
+        'off': 2
+        'on': 1
+      - kind: quick_replies
+        body: "On commence facile puisque l’an dernier Macron est apparu dans une vidéo qui a fait beaucoup débat de…"
+        replies: &quiz_youtuber_state_1_replies
+          - body: "Norman & Kemar \U0001F46F"
+            value: BAD
+            reaction: "Nope de McFly & Carlito, ce qui a été plutôt mal vu par une partie de leur public à l’approche des élections \U0001F914"
+          - body: "Squeezie & Cyprien\U0001F46F "
+            value: BAD
+            reaction: "Nope de McFly & Carlito, ce qui a été plutôt mal vu par une partie de leur public à l’approche des élections \U0001F914"
+          - body: "Inoxtag & Michou \U0001F46F"
+            value: BAD
+            reaction: "Nope de McFly & Carlito, ce qui a été plutôt mal vu par une partie de leur public à l’approche des élections \U0001F914"
+          - body: "Mcfly & Carlito \U0001F46F"
+            value: GOOD
+            reaction: "Bien joué ! Ça a été plutôt mal vu par une partie de leur public à l’approche des élections \U0001F914"
+        replies_shuffle: true
+      - - body: J'ai pas compris, utilise ces boutons là pour répondre 👇
+          kind: quick_replies
+          replies: *quiz_youtuber_state_1_replies
+quiz_youtuber_state_2:
+  - kind: 'reask_messages'
+    messages:
+      - - body: '%{jam_reaction}'
+          default_jam_reaction: 'De McFly & Carlito, ce qui a été plutôt mal vu par une partie de leur public à l’approche des élections \U0001F914'
+        - kind: typing
+          'off': 2
+          'on': 1
+        - body: 'C’est loin d’être la 1ère fois que la politique fait de l’oeil aux youtubers, il y a 2 ans Léna Situations a même refusé une invitation du gouvernement car elle ne se sentait pas légitime...'
+        - kind: image
+          url: 'https://canbot-jam.s3.amazonaws.com/2022-05-06/1651828693-image.png'
+        - kind: typing
+          'off': 3
+          'on': 1
+        - body: "Faut dire qu’elle devait être bien occupée à cette époque puisque son livre était n°1 des ventes en France, rien que ça \U0001F3C6"
+        - kind: typing
+          'off': 3
+          'on': 1
+        - kind: quick_replies
+          body: Son titre c’est…
+          replies: &quiz_youtuber_state_2_replies
+            - body: 'Ma situation ✍️ '
+              value: BAD
+              reaction: "Non \"Toujours Plus\", pour parler de sa philosophie de vie qu’elle résume en + = +, soit “le positif attire le positif” \U0001F308"
+            - body: Léna ✍️
+              value: BAD
+              reaction: "Non \"Toujours Plus\", pour parler de sa philosophie de vie qu’elle résume en + = +, soit “le positif attire le positif” \U0001F308"
+            - body: Toujours Plus ✍️
+              value: GOOD
+              reaction: "Exactement ! Pour parler de sa philosophie de vie qu’elle résume en + = +, soit “le positif attire le positif” \U0001F308"
+            - body: 'J’écris un livre ✍️ '
+              value: BAD
+              reaction: "Non \"Toujours Plus\", pour parler de sa philosophie de vie qu’elle résume en + = +, soit “le positif attire le positif” \U0001F308"
+          replies_shuffle: true
+      - - body: J'ai pas compris, utilise ces boutons là pour répondre 👇
+          kind: quick_replies
+          replies: *quiz_youtuber_state_2_replies
+quiz_youtuber_state_3:
+  - kind: 'reask_messages'
+    messages:
+      - - body: '%{jam_reaction}'
+          default_jam_reaction: '\"Toujours Plus\", pour parler de sa philosophie de vie qu’elle résume en + = +, soit “le positif attire le positif” \U0001F308'
+        - kind: typing
+          'off': 2
+          'on': 1
+        - body: "Vu son succès actuel ça a l’air de bien marcher et c’est pas son amoureux qui va le contredire \U0001F970"
+        - kind: typing
+          'off': 2
+          'on': 1
+        - kind: quick_replies
+          body: 'Ça reste dans le thème puisque lui aussi est Youtuber, c’est…'
+          replies: &quiz_youtuber_state_3_replies
+            - body: "Squeezie \U0001F646"
+              value: BAD
+              reaction: "Nope Seb La Frite et J’ADORE les vidéos où il raconte des histoires \U0001F37F"
+            - body: "Seb La Frite \U0001F646"
+              value: GOOD
+              reaction: "Oui et J’ADORE les vidéos où il raconte des histoires \U0001F37F"
+            - body: "Hugo Décrypte \U0001F646"
+              value: BAD
+              reaction: "Nope Seb La Frite et J’ADORE les vidéos où il raconte des histoires \U0001F37F"
+            - body: "Michou \U0001F646"
+              value: BAD
+              reaction: "Nope Seb La Frite et J’ADORE les vidéos où il raconte des histoires \U0001F37F"
+            - body: "Tibo in Shape \U0001F646"
+              value: BAD
+              reaction: "Nope Seb La Frite et J’ADORE les vidéos où il raconte des histoires \U0001F37F"
+          replies_shuffle: true
+      - - body: J'ai pas compris, utilise ces boutons là pour répondre 👇
+          kind: quick_replies
+          replies: *quiz_youtuber_state_3_replies
+quiz_youtuber_state_4:
+  - kind: 'reask_messages'
+    messages:
+      - - body: '%{jam_reaction}'
+          default_jam_reaction: 'Seb La Frite et J’ADORE les vidéos où il raconte des histoires \U0001F37F'
+        - kind: typing
+          'off': 2
+          'on': 1
+        - body: "J’sais pas il est tout calme, ça me relaxe \U0001F634"
+        - kind: image
+          url: 'https://canbot-jam.s3.amazonaws.com/2022-05-06/1651828872-s_ed29.gif'
+        - kind: typing
+          'off': 3
+          'on': 1
+        - body: "Alors que Natoo impossible de s’endormir sur ses vidéos, même si j’les kiffe \U0001F605"
+        - kind: typing
+          'off': 2
+          'on': 1
+        - kind: quick_replies
+          body: D’ailleurs y’a pas longtemps j’ai appris qu’avant d’être youtubeuse elle était…
+          replies: &quiz_youtuber_state_4_replies
+            - body: "Policière \U0001F46E"
+              value: GOOD
+              reaction: 'Haha ouais, gros changement d’ambiance ✅'
+            - body: 'Hôtesse de l’air ✈️ '
+              value: BAD
+              reaction: 'Haha non Policière, gros changement d’ambiance ❌'
+            - body: "Garagiste \U0001F527"
+              value: BAD
+              reaction: 'Haha non Policière, gros changement d’ambiance ❌'
+            - body: "Coiffeuse \U0001F487"
+              value: BAD
+              reaction: 'Haha non Policière, gros changement d’ambiance ❌'
+            - body: "Osthéo \U0001F9D1‍⚕️ "
+              value: BAD
+              reaction: 'Haha non Policière, gros changement d’ambiance ❌'
+          replies_shuffle: true
+      - - body: J'ai pas compris, utilise ces boutons là pour répondre 👇
+          kind: quick_replies
+          replies: *quiz_youtuber_state_4_replies
+quiz_youtuber_state_5:
+  - kind: 'reask_messages'
+    messages:
+      - - body: '%{jam_reaction}'
+          default_jam_reaction: 'Policière, gros changement d’ambiance !'
+        - kind: typing
+          'off': 2
+          'on': 1
+        - kind: typing
+          'off': 2
+          'on': 1
+        - body: 'Allez la dernière question est un peu spéciale :'
+        - kind: image
+          url: 'https://canbot-jam.s3.amazonaws.com/2022-05-04/1651653759-image.png'
+        - kind: typing
+          'off': 3
+          'on': 1
+        - body: "Qu’il est mignoooon \U0001F970"
+        - kind: typing
+          'off': 2
+          'on': 1
+        - kind: quick_replies
+          body: Tu le reconnais ?
+          replies: &quiz_youtuber_state_5_replies
+            - body: "Michou \U0001F9D2"
+              value: GOOD
+              reaction: "Ouiiii bien joué \U0001F44F"
+            - body: "Squeezie \U0001F9D2"
+              value: BAD
+              reaction: Hehe c’est Michou ❌
+            - body: "Just Riadh \U0001F9D2"
+              value: BAD
+              reaction: Hehe c’est Michou ❌
+            - body: "Zack Nani \U0001F9D2"
+              value: BAD
+              reaction: Hehe c’est Michou ❌
+            - body: " Joyca \U0001F9D2"
+              value: BAD
+              reaction: Hehe c’est Michou ❌
+          replies_shuffle: true
+      - - body: J'ai pas compris, utilise ces boutons là pour répondre 👇
+          kind: quick_replies
+          replies: *quiz_youtuber_state_5_replies
+quiz_youtuber_state_6:
+  - body: '%{jam_reaction}'
+    default_jam_reaction: ''
+  - kind: typing
+    'off': 2
+    'on': 1
+  - body: À l’époque ça s’explosait la tête sur le bureau sans pression !
+  - kind: typing
+    'off': 2
+    'on': 1
+  - kind: generic
+    image_aspect_ratio: square
+    cards:
+      - title: "Michou s’explose la tête sur le bureau \U0001F92F"
+        subtitle: J’sais pas pourquoi mais elle me tue cette vidéo
+        image_url: 'https://jam-powa.s3.eu-west-3.amazonaws.com/a3ef0e09-5026-45fd-bae0-00edaae36936-mich.jpeg'
+        item_url: 'https://www.youtube.com/watch?v=BUTUUF2yXG4'
+        skip_custom_params: true
+        buttons:
+          - body: "En savoir + \U0001F50D"
+            url: 'https://www.youtube.com/watch?v=BUTUUF2yXG4'
+            skip_custom_params: true
+  - kind: typing
+    'off': 3
+    'on': 1
+  - body: 'Bon c’est l’heure du score ~{user_first_name} !'
+  - kind: typing
+    'off': 2
+    'on': 1
+  - kind: condition
+    switch:
+      - condition: "MessengerBot::Utils::TemporaryStore.new(current_user, 'quiz_youtuber_score').value.to_i <= 1"
+        messages:
+          - body: "Ton score est de ~{tmp_variable(key: 'quiz_youtuber_score')}/5, c'est pas ton truc Youtub j'ai l'impression 😅"
+      - condition: "MessengerBot::Utils::TemporaryStore.new(current_user, 'quiz_youtuber_score').value.to_i <= 2"
+        messages:
+          - body: "Ton score est de ~{tmp_variable(key: 'quiz_youtuber_score')}/5, va falloir réviser un peu 😉"
+      - condition: "MessengerBot::Utils::TemporaryStore.new(current_user, 'quiz_youtuber_score').value.to_i <= 3"
+        messages:
+          - body: "Ton score est de ~{tmp_variable(key: 'quiz_youtuber_score')}/5, pas mal 🙂"
+
+      - condition: "MessengerBot::Utils::TemporaryStore.new(current_user, 'quiz_youtuber_score').value.to_i <= 4"
+        messages:
+          - body: "Ton score est de ~{tmp_variable(key: 'quiz_youtuber_score')}/5, tu dois passer pas mal de temps sur Youtube 😉"
+
+      - condition: "MessengerBot::Utils::TemporaryStore.new(current_user, 'quiz_youtuber_score').value.to_i <= 5"
+        messages:
+          - body: "Ton score est de ~{tmp_variable(key: 'quiz_youtuber_score')}/5, ah ouais t'es chauuuuuuud 🔥"
+    else:
+      - body: "Ton score est de ~{tmp_variable(key: 'quiz_youtuber_score')}/5, bien joué \U0001F44F"
+  - kind: typing
+    'off': 5
+    'on': 1
+  - kind: function
+    name: morning_end

@@ -1,0 +1,57 @@
+quiz_youtuber:
+  init:
+    main_transition: state_1
+  options:
+    skip_end: true
+  kind: poll
+  states:
+    - name: state_1
+      main_transition: state_2
+      kind: closed
+      transitions:
+        - postback: GOOD
+          state: state_2
+          eval: "MessengerBot::Utils::TemporaryStore.new(~{current_user}, 'quiz_youtuber_score').value = 1"
+        - postback: BAD
+          state: state_2
+          eval: "MessengerBot::Utils::TemporaryStore.new(~{current_user}, 'quiz_youtuber_score').value = 0"
+    - name: state_2
+      main_transition: state_3
+      kind: closed
+      transitions:
+        - postback: GOOD
+          state: state_3
+          eval: "MessengerBot::Utils::TemporaryStore.new(~{current_user}, 'quiz_youtuber_score').value = MessengerBot::Utils::TemporaryStore.new(~{current_user}, 'quiz_youtuber_score').value.to_i + 1"
+        - postback: BAD
+          state: state_3
+    - name: state_3
+      main_transition: state_4
+      kind: closed
+      transitions:
+        - postback: GOOD
+          state: state_4
+          eval: "MessengerBot::Utils::TemporaryStore.new(~{current_user}, 'quiz_youtuber_score').value = MessengerBot::Utils::TemporaryStore.new(~{current_user}, 'quiz_youtuber_score').value.to_i + 1"
+        - postback: BAD
+          state: state_4
+    - name: state_4
+      main_transition: state_5
+      kind: closed
+      transitions:
+        - postback: GOOD
+          state: state_5
+          eval: "MessengerBot::Utils::TemporaryStore.new(~{current_user}, 'quiz_youtuber_score').value = MessengerBot::Utils::TemporaryStore.new(~{current_user}, 'quiz_youtuber_score').value.to_i + 1"
+        - postback: BAD
+          state: state_5
+    - name: state_5
+      main_transition: state_6
+      kind: closed
+      transitions:
+        - postback: GOOD
+          state: state_6
+          eval: "MessengerBot::Utils::TemporaryStore.new(~{current_user}, 'quiz_youtuber_score').value = MessengerBot::Utils::TemporaryStore.new(~{current_user}, 'quiz_youtuber_score').value.to_i + 1"
+        - postback: BAD
+          state: state_6
+    - name: state_6
+      end: true
+      success: true
+      router: morning
