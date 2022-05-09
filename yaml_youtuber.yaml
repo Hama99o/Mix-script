@@ -27,9 +27,9 @@ quiz_youtuber_state_1:
             value: GOOD
             reaction: "Bien joué ! Ça a été plutôt mal vu par une partie de leur public à l’approche des élections \U0001F914"
         replies_shuffle: true
-      - - body: J'ai pas compris, utilise ces boutons là pour répondre 👇
-          kind: quick_replies
-          replies: *quiz_youtuber_state_1_replies
+    - - body: J'ai pas compris, utilise ces boutons là pour répondre 👇
+        kind: quick_replies
+        replies: *quiz_youtuber_state_1_replies
 quiz_youtuber_state_2:
   - kind: 'reask_messages'
     messages:
