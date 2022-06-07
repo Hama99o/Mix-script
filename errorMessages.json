@@ -4,3 +4,7 @@ RM:
 Push:
 
 "errorData":[{"errors":{"workflow_state":["doesn't exist"],"template":["doit être rempli(e)"],"name":["is already taken in the last 24 hours"]}}]
+{:errors=>{:workflow_state=>["doesn't exist"], :template=>["doit être rempli(e)"], :name=>["is already taken in the last 24 hours"]}}
+
+render json: push.errors, status: :unprocessable_entity
+render json: { "user_ids" => ["some doesn\'t exist"] }, status: :unprocessable_entity
