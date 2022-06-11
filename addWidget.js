@@ -1,7 +1,6 @@
 search.addWidget({
     render: function (opts) {
       var results = opts.results;
-
       if (!is_connected) {
         var categories_names = opts.state.hierarchicalFacetsRefinements.categories_names
         const is_categories_names_empty_or_undefined = categories_names === undefined || categories_names.length == 0
