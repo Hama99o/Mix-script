@@ -5,5 +5,6 @@ function findUniq(arr) {
       return i
     }
   })
+  
   return result === undefined ? 0 : result
 }
