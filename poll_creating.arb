@@ -1,0 +1,5 @@
+name = "testing poll"
+
+20.times do |n|
+    FactoryBot.create(:poll, name: name + n.to_s)
+end
