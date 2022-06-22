@@ -22,6 +22,7 @@ end
 def getArray (n, x, str)
   count = str == 'X' ? 1 : 0
   x = []
+  
   n.times do
     if count % 2 == 0
       x.push('O')
