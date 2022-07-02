@@ -5,6 +5,7 @@ function filterLongWords(sentence, n) {
     if (i.split('').length > n) {
       result.push(i)
     }
+    
     return result
   }, [])
 }
