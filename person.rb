@@ -14,3 +14,13 @@ class Person
     @age
   end
 end
+
+Object.defineProperty(this,"lastName",{
+  get: function() { return _lastName },
+  set: function(value) {
+    _lastName = value;
+    console.log(value)
+
+    _fullName = _firstName + ' ' + value
+  }
+})
