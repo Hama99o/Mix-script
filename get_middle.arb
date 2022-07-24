@@ -1,0 +1,4 @@
+def get_middle(s)
+  a = s.split('')
+  a.length % 2 == 0 ? [a[(a.length/2)-1], a[(a.length/2)]].join('') : [a[(a.length/2).floor]].join('')
+end
