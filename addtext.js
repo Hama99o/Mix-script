@@ -8,4 +8,4 @@ function addText() {
 {/* <input type="text" id="text" placeholder="Enter a text" />
 <input type="submit" onclick="addText()" />
 
-<p id="result-text"></p>  */}
+<p id="result-text"></p>   */}
