@@ -1,0 +1,32 @@
+# Input 
+params = { 
+  segment_index: 2,
+  time_push: "12:00", 
+  qualification: { age: true, gender: false },
+  age_category: "12-25",
+  activity_month_ago: 3,
+  gender: ["male", "female"],
+  subscriptions: ["weekly", "daily"],
+  city_ids: [2, 4, 53],
+  answer_ids: [],
+  excluded_push_ids: []
+}
+
+{
+  segment_index: 2,
+  user_ids: [34, 23, 52],
+  cities: {
+    23: "Paris"
+  }
+}
+
+pushSegmentUserIds
+
+users = User.where(activ: true)
+if params.excluded_push_ids.any? 
+  users.joins(:messages).where("messages.push_id IN (#{params.excluded_push_ids})")
+end
+
+if params.answer_ids.any? 
+  users.joins(:messages).where("messages.push_id IN (#{params.answer_ids})")
+end
