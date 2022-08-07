@@ -9,4 +9,4 @@ and team = false
 and age between 15 and 25
 and gender is not null
 and city_id = 30438
-) -- 1,708
+) --1,708
