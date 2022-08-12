@@ -1,0 +1,3 @@
+def sql
+  users.to_sql.gsub(/"/, '\'')
+end
