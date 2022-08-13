@@ -1,4 +1,4 @@
-function isItBugged(code){
+function isItBugged (code) {
   const date = code.split(' ')[0].split('-')
   const year = date[2] && date[2].split('').length === 4 ? date[2] : "hi"
   const day = date[1] && date[1].split('').length == 2 &&  parseInt(date[1]) <= 12 &&  parseInt(date[1]) > 0 ? date[1] : parseInt(date[1]) == 0 ? '01' : '0000'
