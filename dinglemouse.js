@@ -1,6 +1,6 @@
 class Dinglemouse {
 
-    constructor() {
+    constructor () {
         this.name = this.age = this.sex = 0
         this.hi = []
         this.allValues = {
@@ -10,25 +10,25 @@ class Dinglemouse {
         }
     }
 
-    setAge(age) {
+    setAge (age) {
         this.hi.push(age)
         this.age = age
         return this
     }
 
-    setSex(sex) {
+    setSex (sex) {
         this.hi.push(sex)
         this.sex = sex
         return this
     }
 
-    setName(name) {
+    setName (name) {
         this.hi.push(name)
         this.name = name
         return this
     }
 
-    hello() {
+    hello () {
       console.log(this.hi)
         const phraseArray = this.hi.map ((j) => {
           if (j === this.age || Number.isInteger(j)) {
