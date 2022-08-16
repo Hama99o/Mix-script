@@ -13,6 +13,15 @@
                     :formObject="push"
                     fieldsClass="w-100 mb-3"/>
 
+      <div class="d-flex my-3">
+        <button type="button" :data-checked="checked" class="check-button btn btn-success mb-2 mr-2 submitButton" @click="createOrUpdatePush()" :disabled="canSubmit || checked === 'saved'" >
+          <i class="fas fa-exclamation-triangle" v-if="checked === 'error'"></i>
+          <i class="fas fa-check-circle" v-if="checked === 'saved'"></i>
+          <i class="fas fa-spinner fa-spin" v-if="checked === 'loading'"></i>
+          <i class="fas fa-save" v-if="checked === 'save'"></i>
+          Save
+        </button>
+      </div>
     </form>
     <template v-else>
       <div v-if="push.poll" class='section mt-2 rounded border'>
