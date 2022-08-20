@@ -1,7 +1,4 @@
-// RM:
 "errorData":{"ref":["n'est pas disponible"],"workflow_state":["doesn't exist"]}}
-
-// Push errorData:
 
 "errorData":[{"errors":{"workflow_state":["doesn't exist"],"template":["doit être rempli(e)"],"name":["is already taken in the last 24 hours"]}}]
 {:errors=>{:workflow_state=>["doesn't exist"], :template=>["doit être rempli(e)"], :name=>["is already taken in the last 24 hours"]}}
