@@ -7,7 +7,7 @@
           Back
         </router-link>
       </div>
-{{ pushParams }}
+
       <div>
         <router-link :to="routeParams" class="btn btn-success mr-2 backToPushes">
           <i class="fas fa-comments"></i>
