@@ -1,0 +1,21 @@
+'Push show should have all info' (browser) {
+  browser
+    .assert.value('#push_name', 'push_it')
+    .assert.value('#push_publishDatetime', '2022-08-18T13:52')
+    .assert.value('#push_qualifAge', 'true')
+    .assert.value('#push_qualifGender', 'true')
+    .assert.value('#push_qualifCity', 'false')
+    .assert.value('#push_0_male', 'true')
+    .assert.value('#push_0_female', 'true')
+    .assert.value('#index_0_daily', 'true')
+    .assert.value('#index_0_weekly', 'true')
+    .assert.value('#push_0_activityMonthAgo', '3')
+    .assert.value('#push_0_ageFrom', '15')
+    .assert.value('#push_0_ageTo', '25')
+    .assert.containsText('.submitButton', 'Schedule')
+    .click('.advanced-options')
+    .assert.containsText('#push_template .ace_content', yaml.dump({ push_template: [{ body: 'I like push' }] }).slice(0, -1))
+    .assert.containsText('#push_sql .ace_content', yaml.dump('select id from users limit 1').slice(0, -1))
+    .assert.value('#push_workflowState', 'main')
+    .end()
+}
