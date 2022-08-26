@@ -16,7 +16,7 @@
       </div>
 
       <div>
-        <button class="duplicatePush btn btn-light shadow-sm" @click="duplicate(push)">
+        <button class="duplicatePush btn btn-light shadow-sm" @click="duplicate()">
           <i class="far fa-copy"></i>
           Duplicate
         </button>
@@ -59,7 +59,6 @@ import back from '@/services/back.js'
 import AceTextArea from '@/components/form/AceTextArea'
 import LoadingContainer from '@/components/layout/LoadingContainer'
 import store from '@/store/mappers'
-import yaml from 'js-yaml'
 
 export default {
   name: 'push-show',
@@ -73,7 +72,6 @@ export default {
   computed: {
     ...store.state('drafts', ['push']),
     pushExists () {
-      console.log(this.push)
       return Object.keys(this.push).length !== 0
     },
     isPushed () {
@@ -81,7 +79,7 @@ export default {
     }
   },
   methods: {
-    ...store.actions('drafts', ['getPush']),
+    ...store.actions('drafts', ['getPush', 'getAndDuplicatePush']),
     async schedulePush () {
       try {
         this.checked = 'loading'
@@ -106,8 +104,9 @@ export default {
         return this.$router.push({ name: 'Pushes' })
       })
     },
-    duplicate (push) {
-      return this.$router.push({ name: 'PushDuplicate', params: { id: push.id } })
+    async duplicate () {
+      await this.getAndDuplicatePush(this.push.id)
+      this.$router.push({ name: 'NewPush' })
     },
     editPath (push) {
       return this.$router.push({ name: 'PushEdit', params: { id: push.id } })
@@ -115,9 +114,6 @@ export default {
   },
   created () {
     this.getPush(this.id)
-    if (typeof this.push.template !== 'string') {
-      this.push.template = yaml.safeDump(this.push.template)
-    }
   }
 }
 </script>
