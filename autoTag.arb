@@ -1,0 +1,26 @@
+
+question_id = 14888
+previous_question_id = 14887
+bot_name = :jam
+
+question = Question.from(bot_name).find(question_id)
+previous_question = Question.from(bot_name).find(previous_question_id)
+
+previous_question.quick_replies.each do |qr|
+  t = Thematic.new(question: question, name: qr)
+  t.save
+end
+
+all_thematics = question.thematics.to_a
+
+all_previous_answers = previous_question.answers.to_a
+
+question.answers.includes(:user).each do |answer|
+  user = answer.user
+  previous_answer = all_previous_answers.find{ |a| a.user_id == user.id }
+  if previous_answer.present?
+    thematic = all_thematics.find{ |t| t.name == previous_answer.text}
+    tar = ThematicAnswerRelationship.new(thematic: thematic, answer: answer)
+    tar.save
+  end
+end; p 'ok'
