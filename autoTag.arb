@@ -23,4 +23,4 @@ question.answers.includes(:user).each do |answer|
     tar = ThematicAnswerRelationship.new(thematic: thematic, answer: answer)
     tar.save
   end
-end;
+end; p 'ok'
