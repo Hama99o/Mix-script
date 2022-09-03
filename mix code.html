@@ -1,0 +1,10 @@
+      genderss: [{ gender: 'male' }, { gender: 'female' }],
+      user: {
+        genderss: [{ gender: 'female' }]
+      }
+
+      <div v-for="role in genderss" :key="role.gender">
+        <label>{{role.gender}}</label>
+        <input type="checkbox" v-model="user.genderss" :value="role"/>
+      </div>
+{{user}}
