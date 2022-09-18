@@ -4,7 +4,6 @@ export default {
       return answers.filter((answer) => {
         if (pollAnswers) {
           const selectedPollAnswers = this.selectedPollAnswers(selectedQuestions, pollAnswers, answer)
-
           if (Array.isArray(selectedPollAnswers) && selectedPollAnswers.length !== selectedQuestions.length) {
             return false
           }
