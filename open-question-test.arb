@@ -1,0 +1,450 @@
+require 'rails_helper'
+require 'capybara'
+
+describe "Open Question Thematics page", type: :feature do
+  subject { visit bot_open_question_thematics_path(bot_name, open_question) }
+  let(:bot_name) { :qotd }
+  let(:poll) { create(:poll, bot_name: bot_name) }
+  let(:open_question) { create(:question, poll: poll, uid: 'uid_example', open: true, bot_name: bot_name) }
+  let(:close_question) { create(:question, poll: poll, open: false, bot_name: bot_name) }
+  let(:close_question_answers) { create_list(:answer, 2, text: close_question.quick_replies.first, question: close_question, bot_name: bot_name) }
+
+  let(:answers) { create_list(:answer, 5, text: 'les tomates sont cuites', question: open_question, bot_name: bot_name) }
+
+  before do
+    LocalAnswer.delete_all
+    open_question
+    close_question
+    close_question_answers
+    answers.first.update(user: close_question_answers.first.user )
+    p 'hi'
+    p Question.from(bot_name).find(close_question.id).answers
+    p close_question.answers
+    p 'bye'
+    answers
+    poll.save
+  end
+
+  def create_thematic_from_occurence
+    within '.occurence', match: :first do
+      find('.create-thematic-from-occurence').click
+    end
+  end
+
+  def  create_thematic
+    within '.thematics' do
+      find('.create-empty-thematic').click
+    end
+
+    within '.thematic', match: :first  do
+      find('input.name').set 'bonjour'
+    end
+  end
+
+  def create_thematic_and_select_all_answers(answers_nb)
+    create_thematic
+    select_none
+
+    within '.answers', match: :first do
+      find('.select-all-answers').click
+    end
+
+    selected_answers_count(answers_nb)
+  end
+
+  def select_none
+    within '.arrow-menu', match: :first do
+      find('.arrow').click
+    end
+
+    within '.menu-list', match: :first do
+      find('div.thematic', text: 'None').click
+    end
+  end
+
+  def lock_answers
+    within '.multiple-thematic-action' do
+      find('.lock-all').click
+    end
+  end
+
+  def unlock_answers
+    within '.multiple-thematic-action' do
+      find('.unlock-all').click
+    end
+  end
+
+  def selected_answers_count(answers_nb)
+    expect(page).to have_selector :css, '.selected-answer-count'
+
+    within '.selected-answer-count' do
+      expect(page).to have_content "#{answers_nb}"
+    end
+  end
+
+  def assign_thematic(selector='.answer')
+    expect(page).to have_selector :css, selector
+
+    within selector, match: :first do
+      find('.selector-button').click
+      expect(page).to have_selector :css, '.values'
+      within '.values' do
+        find('.value', match: :first).click
+      end
+    end
+  end
+
+  it "displays the question, answers & occurences", js: true do
+    subject
+
+    within '.breadcrumb' do
+      expect(page).to have_content(open_question.id)
+    end
+
+    within '#thematics-header' do
+      expect(page).to have_content(open_question.id)
+      expect(page).to have_content(open_question.uid)
+      expect(page).to have_content(open_question.body)
+    end
+
+    within '.answers' do
+      expect(page).to have_content('les tomates sont cuites', count: 5)
+    end
+
+    within '.occurences' do
+      expect(page).to have_content('tomates: 5')
+      expect(page).to have_content('cuites: 5')
+    end
+  end
+
+  it "can create a thematic from an occurence", js: true do
+    subject
+    create_thematic_from_occurence()
+    expect{ open_question.thematics.count }.to become_incremented_by(1)
+  end
+
+  it "can create an empty thematic", js: true do
+    subject
+
+    expect do
+      create_thematic
+    end.to change{open_question.thematics.count}.by(1)
+    # apparently here we had enough time to have the backend updated, so we don't use a 'become' matcher
+  end
+
+  it "can update a thematic's name", js: true do
+    subject
+    create_thematic
+
+    within '.thematic' do
+      input = find('input.name')
+      input.set 'da name'
+    end
+
+    find("body").click
+    expect{ open_question.thematics.first.name }.to become 'da name'
+  end
+
+  it "can add a keyword to a thematic", js: true do
+    subject
+    create_thematic
+
+    within '.thematic' do
+      find('.add-keyword').click
+      find('.keyword-input').set 'keke'
+      find('.keyword-input').native.send_keys(:return)
+    end
+
+    expect{ open_question.thematics.first.keywords }.to become(['keke'])
+  end
+
+  it "can delete a keyword from a thematic", js: true do
+    subject
+    create_thematic_from_occurence()
+
+    within '.thematic' do
+      find('.keyword').click
+    end
+
+    expect{ open_question.thematics.first.keywords }.to become([])
+  end
+
+  it "can delete a thematic", js: true do
+    subject
+    create_thematic_from_occurence()
+    expect{ open_question.thematics.count }.to become(1)
+
+    within '.thematic' do
+      find('.delete').click
+    end
+
+    expect{ open_question.thematics.count }.to become(0)
+  end
+
+  it "can assign a thematic to an answer", js: true do
+    subject
+
+    create_thematic_from_occurence()
+    expect{ open_question.thematics.count }.to become_incremented_by(1)
+
+    assign_thematic
+    expect{ ThematicAnswerRelationship.count }.to become_incremented_by(1)
+  end
+
+  it "can remove a thematic from an answer", js: true do
+    subject
+
+    within '.occurence', match: :first do
+      find('.create-thematic-from-occurence').click
+    end
+
+    assign_thematic
+    expect{ ThematicAnswerRelationship.count }.to become_incremented_by(1)
+
+    within '.answer', match: :first do
+      find('.assigned-thematic').click
+    end
+
+    expect{ ThematicAnswerRelationship.count }.to become_incremented_by(-1)
+  end
+
+  it "can lock an answers thematics", js: true do
+    subject
+
+    within '.answer', match: :first do
+      find('.lock').click
+    end
+
+    expect{ LocalAnswer.where(thematics_locked: true).count }.to become_incremented_by(1)
+  end
+
+  it "can auto-assign thematics to answers", js: true do
+    subject
+
+    within '.occurence', match: :first do
+      find('.create-thematic-from-occurence').click
+    end
+
+    within '.occurence:last-of-type' do
+      find('.create-thematic-from-occurence').click
+    end
+
+    within '.thematics' do
+      find('.auto-assign-thematics').click
+    end
+
+    expect{ ThematicAnswerRelationship.count }.to become_incremented_by(10)
+  end
+
+  it "can assign a thematic to a single answer", js: true do
+    subject
+
+    within '.occurence', match: :first do
+      find('.create-thematic-from-occurence').click
+    end
+
+    within '.answer', match: :first do
+      find('.selected-answer').click
+    end
+
+    selected_answers_count(1)
+    assign_thematic
+    expect{ ThematicAnswerRelationship.count }.to become_incremented_by(1)
+  end
+
+  it "can assign a thematic to all answers", js: true do
+    subject
+    create_thematic_and_select_all_answers(5)
+    assign_thematic('.assign-thematic')
+    expect{ ThematicAnswerRelationship.count }.to become_incremented_by(5)
+  end
+
+  it "can remove a thematic from Select Menu: ALL answers", js: true do
+    subject
+    create_thematic
+
+    within '.arrow-menu', match: :first do
+      find('.arrow').click
+    end
+
+    within '.menu-list', match: :first do
+      first('div.thematic', text: 'All').click
+    end
+
+    within '.multi-selector-container', match: :first do
+      assign_thematic('.assign-thematic')
+    end
+
+    select_none
+
+    within '.arrow-menu', match: :first do
+      find('.arrow').click
+    end
+
+    within '.menu-list', match: :first do
+      find('div.thematic', text: 'bonjour').click
+    end
+
+    selected_answers_count(5)
+    assign_thematic(".remove-thematic")
+    expect{ ThematicAnswerRelationship.count }.to become_incremented_by(-5)
+  end
+
+  context "with a filter input" do
+    let(:answer) { create(:answer, text: 'Penser plus à moi', question: open_question, bot_name: bot_name) }
+
+    before do
+      answer
+    end
+
+    it "can assign a thematic to a answer", js: true do
+      subject
+
+      within '.answers' do
+        find("input[placeholder='Words separated by commas']").set "Penser"
+      end
+
+      create_thematic_and_select_all_answers(1)
+      assign_thematic
+      expect{ ThematicAnswerRelationship.count }.to become_incremented_by(1)
+    end
+  end
+
+  context "with age filter" do
+    let(:user) { create(:user, age: 26, bot_name: bot_name) }
+    let(:answer) { create(:answer, user: user, question: open_question, bot_name: bot_name) }
+
+    before do
+      answer
+    end
+
+    it "can assign a thematic to a answer", js: true do
+      subject
+
+      within '.age-filter-container' do
+        find("input.min-age").set '25'
+        find("input.max-age").set '27'
+      end
+
+      create_thematic_and_select_all_answers(1)
+      assign_thematic
+      expect{ ThematicAnswerRelationship.count }.to become_incremented_by(1)
+    end
+  end
+
+  it "locks all thematics answers", js: true do
+    subject
+    create_thematic_and_select_all_answers(5)
+
+    lock_answers
+    expect{ LocalAnswer.where(thematics_locked: true).count }.to become_incremented_by(5)
+  end
+
+  it "unlocks all thematics answers", js: true do
+    subject
+    create_thematic_and_select_all_answers(5)
+
+    lock_answers
+    expect{ LocalAnswer.where(thematics_locked: true).count }.to become_incremented_by(5)
+
+    unlock_answers
+    expect{ LocalAnswer.where(thematics_locked: false).count }.to become_incremented_by(5)
+  end
+
+  it "selects all unlocked answers and locks them", js: true do
+    subject
+    create_thematic_and_select_all_answers(5)
+
+    lock_answers
+    expect{ LocalAnswer.where(thematics_locked: true).count }.to become_incremented_by(5)
+
+    within '.answer', match: :first do
+      expect(page).to have_css("div[data-locked='true']")
+    end
+  end
+
+  it "selects all locked answers and unlocks them", js: true do
+    subject
+    create_thematic_and_select_all_answers(5)
+
+    lock_answers
+    select_none
+
+    within '.arrow-menu', match: :first do
+      find('.arrow').click
+    end
+
+    within '.menu-list', match: :first do
+      find('div.thematic', text: 'All locked').click
+    end
+
+    selected_answers_count(5)
+
+    unlock_answers
+    expect{ LocalAnswer.where(thematics_locked: false).count }.to become_incremented_by(5)
+  end
+
+  # We don't want to reactively filter out an answer when we modify its tags
+  it "has a nb tags filter which is not reactive", js: true do
+    subject
+
+    create_thematic_from_occurence()
+
+    assign_thematic
+
+    create_thematic
+
+    within '.filter-container' do
+      find(".filter-nb-tags").set '1'
+      find('.filter-nb-tags-button').click
+    end
+
+    assign_thematic
+    expect(page).to have_css '.answer', count: 1
+    expect(page).to have_css '.assigned-thematic', count: 2
+  end
+
+  context "with gender filters" do
+    let(:male_user) { create(:user, age: 15, gender: 'male', bot_name: bot_name) }
+    let(:male_user_answer) { create_list(:answer, 5, user: male_user, question: open_question, bot_name: bot_name) }
+
+    let(:female_user) { create(:user, age: 18, gender: 'female', bot_name: bot_name) }
+    let(:female_user_answer) { create_list(:answer, 9, user: female_user, question: open_question, bot_name: bot_name) }
+
+    let(:unknown_user) { create(:user, age: 18, gender: nil, bot_name: bot_name) }
+    let(:unknown_user_answer) { create_list(:answer, 8, user: unknown_user, question: open_question, bot_name: bot_name) }
+
+    before do
+      Answer.from(bot_name).destroy_all
+      male_user_answer
+      female_user_answer
+      unknown_user_answer
+    end
+
+    it "can filter answers by all genders", js: true do
+      subject
+
+      expect(page).to have_css '.answer', count: 22
+      find('.female-filter').click
+      find('.null-filter').click
+      expect(page).to have_css '.answer', count: 5
+      find('.female-filter').click
+      expect(page).to have_css '.answer', count: 14
+      find('.male-filter').click
+      expect(page).to have_css '.answer', count: 9
+      find('.female-filter').click
+      expect(page).to have_css '.answer', count: 22
+      find('.null-filter').click
+      expect(page).to have_css '.answer', count: 8
+      find('.male-filter').click
+      expect(page).to have_css '.answer', count: 13
+    end
+
+
+    it "can filter answers by all genders", js: true do
+      subject
+      sleep 15
+      expect(page).not.to have_css '.answer', count: 13
+    end
+  end
+end
