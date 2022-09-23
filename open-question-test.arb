@@ -101,12 +101,6 @@ describe "Open Question Thematics page", type: :feature do
       expect(page).to have_content(open_question.id)
     end
 
-    within '#thematics-header' do
-      expect(page).to have_content(open_question.id)
-      expect(page).to have_content(open_question.uid)
-      expect(page).to have_content(open_question.body)
-    end
-
     within '.answers' do
       expect(page).to have_content('les tomates sont cuites', count: 5)
     end
