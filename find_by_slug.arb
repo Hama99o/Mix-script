@@ -1,0 +1,4 @@
+  def show
+    @study = Study.find_by_slug(params[:id])
+    raise ActionController::RoutingError.new('Not Found') if @study.blank?
+  end
