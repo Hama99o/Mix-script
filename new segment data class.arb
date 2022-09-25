@@ -1,0 +1,109 @@
+class PushSegmentData
+  attr_reader :params
+
+  def initialize(params)
+    @params = params
+  end
+
+  def users_count
+    users.map(&:id).count
+  end
+
+  def users
+    users = User.where(team: false, push: true)
+    users = users.where("message_retry_count < 5")
+    users = users.where("active_at > now() - interval '#{activity_month_ago} month'") if activity_month_ago.present?
+
+    if time_push
+      one_hour_before_morning_push = (time_push - 1.hour).strftime("%H:%M").to_i * 3600
+      one_hour_after_morning_push = (time_push + 1.hour).strftime("%H:%M").to_i * 3600
+      users = users.where("morning_push_hour <  #{one_hour_before_morning_push} OR morning_push_hour > #{one_hour_after_morning_push}")
+    end
+
+    users = users.where.not(gender: nil) if mandatory_gender?
+    users = users.where.not(age: nil) if mandatory_age?
+    users = users.where.not(city_id: nil) if mandatory_city?
+    users = users.where(gender: genders) if genders.present?
+    users = users.where(age: age_category) if age_category
+    users = users.where(city_id: city_ids) if city_ids.present?
+
+    if excluded_push_ids.present?
+      user_ids = Message.where(user_id: users.map(&:id), push_id: excluded_push_ids).limit(65534).pluck(:user_id)
+      users = users.where.not(id: user_ids.uniq) if user_ids.present?
+    end
+
+    if question_ids.present?
+      user_ids = Answer.where(user_id: users.map(&:id), question_id: question_ids).limit(65534).pluck(:user_id)
+      users = users.where.not(id: user_ids.uniq) if user_ids.present?
+    end
+
+    if subscriptions.present?
+      users = users.joins(:subscriptions).where("subscriptions_users.subscription_id in (?)", subscriptions)
+    end
+
+    users
+  end
+
+  def mandatory_gender?
+    params[:qualification_gender] && params[:qualification_gender][:gender]
+  end
+
+  def mandatory_age?
+    params[:qualification_gender] && params[:qualification_gender][:age]
+  end
+
+  def mandatory_city?
+    params[:qualification_gender] && params[:qualification_gender][:city]
+  end
+
+  def genders
+    params[:genders]
+  end
+
+  def age_category
+    if params[:age_category]
+      age_category = params[:age_category]
+      Range.new(*age_category.split('-').map(&:to_i))
+    end
+  end
+
+  def activity_month_ago
+    params[:activity_month_ago]
+  end
+
+  def city_ids
+    params[:city_ids]
+  end
+
+  def user_limit
+    params[:user_limit]
+  end
+
+  def subscriptions
+    params[:subscriptions]
+  end
+
+  def time_push
+    Time.zone.parse(params[:time_push]) if params[:time_push]
+  end
+
+  def excluded_push_ids
+    params[:excluded_push_ids]
+  end
+
+  def question_ids
+    params[:question_ids]
+  end
+
+  def user_ids_params
+    params[:user_ids]
+  end
+
+  def sql
+    if user_limit.present?
+      "(#{users.select(:id).distinct.limit(user_limit).to_sql.gsub("\"", "")})"
+    else
+      "(#{users.select(:id).distinct.to_sql.gsub("\"", "")})"
+    end
+  end
+end
