@@ -4,14 +4,6 @@ function NamedOne(first, last) {
     var _lastName = last
     var _fullName = _firstName + ' ' + _lastName
 
-    Object.defineProperty(this,"firstName",{
-      get: function() { return _firstName },
-      set: function(value) {
-        _firstName = value;
-        _fullName = value + ' ' + _lastName
-      }
-    })
-
     Object.defineProperty(this,"lastName",{
       get: function() { return _lastName },
       set: function(value) {
