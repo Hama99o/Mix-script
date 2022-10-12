@@ -103,7 +103,6 @@ class MessengerBot::V1::PushesController < MessengerBot::ApplicationController
   end
 
   def users
-    p 'hoiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii'
     @users ||= ::User.where(id: user_ids)
   end
 
