@@ -30,6 +30,11 @@ class MessengerBot::V1::PushesController < MessengerBot::ApplicationController
       status: :ok
   end
 
+  def show
+    render json: ::Push.where(user_made: true).find(params[:id]),
+      status: :ok
+  end
+
   def create
     if all_users_present? && push.save
       user_ids = users.blank? ? nil : users.map { |u| u.id }
