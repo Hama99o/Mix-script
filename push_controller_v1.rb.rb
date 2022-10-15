@@ -36,7 +36,7 @@ class MessengerBot::V1::PushesController < MessengerBot::ApplicationController
   end
 
   def create
-    if all_users_present? && push.save
+    if all_users_present?
       user_ids = users.blank? ? nil : users.map { |u| u.id }
 
       if time_schedule.present?
