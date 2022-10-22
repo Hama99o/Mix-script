@@ -10,10 +10,6 @@ def increasing(arr)
     arr.uniq.length == arr.length && arr == arr.sort ? 1 : false
 end
 
-def not_decreasing(arr)
-    arr.uniq.length != arr.length && arr == arr.sort ? 2 : false
-end
-
 def decreasing(arr)
     arr.uniq.length == arr.length && arr.sort == arr.reverse ? 3 : false
 end
