@@ -22,3 +22,6 @@ def not_increasing(arr)
   arr.uniq.length != arr.length && arr.sort == arr.reverse ? 4 : false
 end
 
+def constant(arr)
+  arr.uniq.length == 1  ? 5 : false
+end
