@@ -15,4 +15,11 @@ class SelectJampotWinner
     )
     scheduled_push(push, [user_id])
   end
+
+  def push_template(state)
+    MessengerBot::Wordings.instance.load! # for relaoding the wording
+    template = {}
+    template[state] = MessengerBot::Wordings.get(state)
+    template
+  end
 end
