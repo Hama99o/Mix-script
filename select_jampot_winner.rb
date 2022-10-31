@@ -16,6 +16,15 @@ class SelectJampotWinner
     scheduled_push(push, [user_id])
   end
 
+  def notify_error_on_slack
+    SlackNotificationWorker.perform_async(
+      "Jampot failed! qualified users not found",
+      {
+        channel: '#jampot',
+      }
+    )
+  end
+
   def push_template(state)
     MessengerBot::Wordings.instance.load! # for relaoding the wording
     template = {}
