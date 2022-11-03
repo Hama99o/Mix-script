@@ -5,31 +5,33 @@ class SelectJampotWinner
     competition_items = CompetitionItem
       .joins(:user)
       .where("
-        closed_at is null
-        and gender is not null
-        and age is not null
-        and city_id is not null
-        and occupation is not null
+        competition_items.closed_at is null
+        and users.gender is not null
+        and users.age is not null
+        and users.city_id is not null
+        and users.occupation is not null
+        and users.team = false
       ")
 
-    user_ids_with_scores = {}
+    score_group_by_user_ids = {}
 
     competition_items.find_each do |competition_item|
-      user_ids_with_scores[competition_item.user_id] ||= 0
-      user_ids_with_scores[competition_item.user_id] += competition_item.score
+      score_group_by_user_ids[competition_item.user_id] ||= 0
+      score_group_by_user_ids[competition_item.user_id] += competition_item.score
     end
 
-    if user_ids_with_scores.present?
-      winner_user_id = winner_user_id_draw(user_ids_with_scores)
-      loser_user_ids = user_ids_with_scores.keys - [winner_user_id]
+    if score_group_by_user_ids.keys.any?
+      winner_id = draw_winner_id(score_group_by_user_ids)
 
-      winner_push(winner_user_id)
-      losers_push(loser_user_ids)
+      winner_push(winner_id)
+      first_loser_push(competition_items.where.not(user_id: winner_id))
+      second_loser_push(competition_items.where.not(user_id: winner_id))
+
       competition_items.update_all(closed_at: Time.now)
-      notify_winner_user_id_on_slack(winner_user_id)
+      notify_slack("The winner user_id is #{winner_id}")
     else
-      notify_error_on_slack
-      raise StandardError.new "Qualified users not found"
+      notify_slack("Jampot failed! qualified users not found")
+      raise ("Qualified users not found")
     end
   end
 
