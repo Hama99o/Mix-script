@@ -1,6 +1,9 @@
 class SelectJampotWinner
   include Sidekiq::Worker
 
+  WINNER_STATE_MACHINE_NAME = "jampot_winner"
+  LOSER_STATE_MACHINE_NAME = "jampot_loser"
+
   def perform
     competition_items = CompetitionItem
       .joins(:user)
