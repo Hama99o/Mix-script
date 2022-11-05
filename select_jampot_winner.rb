@@ -40,17 +40,20 @@ class SelectJampotWinner
 
   private
 
-  def winner_push(user_id)
-    state_machine = StateMachine.find(317)
+  def winner_push(winner_id)
+    raise "'#{WINNER_STATE_MACHINE_NAME}' state machine doesn't exist" unless MessengerBot::StateMachine.exists?(WINNER_STATE_MACHINE_NAME)
 
-    push =  push = Push.create!(
-      name: state_machine.name,
+    state_machine ||= MessengerBot::StateMachine.instance.find(WINNER_STATE_MACHINE_NAME)
+
+    push = Push.create!(
+      name: "#{state_machine.name}_#{winner_publish_datetime(winner_id).strftime("%H:%M")}",
       workflow_state: state_machine.start_state,
-      template: push_template(state_machine.start_state),
-      publish_datetime: Time.now,
-      user_ids: [user_id],
+      template: { state_machine.start_state => MessengerBot::Wordings.get(state_machine.start_state) },
+      publish_datetime: winner_publish_datetime(winner_id),
+      user_ids: [winner_id]
     )
-    scheduled_push(push, [user_id])
+
+    scheduled_push(push)
   end
 
   def losers_push(user_ids)
