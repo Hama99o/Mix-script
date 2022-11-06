@@ -56,6 +56,30 @@ class SelectJampotWinner
     scheduled_push(push)
   end
 
+
+  def first_loser_push(competition_items)
+    raise "'#{LOSER_STATE_MACHINE_NAME}' state machine doesn't exist" unless MessengerBot::StateMachine.exists?(LOSER_STATE_MACHINE_NAME)
+
+    state_machine ||= MessengerBot::StateMachine.instance.find(LOSER_STATE_MACHINE_NAME)
+    sql_query = first_push_users(competition_items)
+    .select(:user_id)
+    .distinct
+    .to_sql
+
+    publish_datetime = Time.now + 30.minutes
+
+
+    push = Push.create!(
+      name: "#{state_machine.name}_#{publish_datetime.strftime("%H:%M")}",
+      workflow_state: state_machine.start_state,
+      template: { state_machine.start_state => MessengerBot::Wordings.get(state_machine.start_state) },
+      publish_datetime: publish_datetime,
+      sql: sql_query
+    )
+
+    scheduled_push(push)
+  end
+
   def losers_push(user_ids)
     state_machine = StateMachine.find(322)
 
