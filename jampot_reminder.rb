@@ -13,7 +13,6 @@ class JampotReminder
     end
   end
 
-
   def competition_items
     CompetitionItem
     .joins(:user)
