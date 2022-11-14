@@ -20,7 +20,6 @@ class JampotReminder
       competition_items.closed_at is null
       and users.push = true
       and (users.country = 'France' OR users.country is null)
-      and users.message_retry_count < 5
       ")
   end
 
