@@ -1,0 +1,34 @@
+MessengerBot::StateMachine.instance.load_state_machines
+ MessengerBot::Wordings.instance.load!
+ FlashWeekend::ScheduleAllWeekendWorker.new.perform
+
+
+
+  def saturday_11am
+    Time.zone.now.beginning_of_day + (6 - Time.zone.now.wday).days + 11.hours
+  end
+
+  def sunday_11am
+    Time.zone.now.beginning_of_day + (7 - Time.zone.now.wday).days + 11.hours
+  end
+
+  def is_state_machines_exist?
+    StateMachine.find_by(name: name_of(saturday_11am)).present? && StateMachine.find_by(name: name_of(sunday_11am)).present?
+  end
+
+
+flash_weekend_template_sunday
+flash_weekend_template_saturday
+
+sm = StateMachine.find(327)
+ state_machine = MessengerBot::Utils::DuplicateStateMachine.new(sm).perform('flash_weekend_2022_12_3_generatedd')
+
+StateMachine.where.not(name: ['flash_weekend_template_sunday','flash_weekend_template_saturday']).destroy_all
+Wording.where(key: ['flash_weekend_2022_12_3_generated_start', 'flash_weekend_2022_12_4_generated_start'] ).destroy_all
+Wording.where(key: ['flash_weekend_2022_12_3_generated_end', 'flash_weekend_2022_12_4_generated_end'] ).destroy_all
+
+ Wording.where(key: ['flash_weekend_2022_12_3_generated_desabo', 'flash_weekend_2022_12_4_generated_desabo'] ).destroy_all
+
+
+
+
