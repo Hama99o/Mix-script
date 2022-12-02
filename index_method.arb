@@ -1,0 +1,30 @@
+def index
+  per =  params[:per].try(:to_i) || 20
+  page = params[:page].try(:to_i) || 0
+  search = params[:search]
+  publish = params[:publish]
+  question = Question.find(params[:question_id])
+
+  answers = answers(publish, search)
+  nb_pages = per ? nb_pages(answers, per) : nil
+  answers = paginated_object(answers, page, per)
+  meta = {
+    page: page,
+    per: per,
+    nb_pages: nb_pages,
+    search: search,
+    publish: publish,
+    question: {
+      body: question.body,
+      uid: question.uid,
+      poll_id: question.poll_id,
+      state_machine_id: question.poll.state_machine_id,
+      article_or_normal_url: hello_jam_web_url(question)
+    }
+  }
+
+  render json: answers,
+    each_serializer: API::V2::Power::AnswerSerializer,
+    meta: meta,
+    status: :ok
+end
