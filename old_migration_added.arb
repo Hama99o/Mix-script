@@ -1,0 +1,6 @@
+class AddFrontParamsAndPollToPush < ActiveRecord::Migration[5.2]
+  def change
+    add_column :pushes, :front_params, :json, default: '{}'
+    add_reference :pushes, :poll, index: true, foreign_key: true, null: true
+  end
+end
