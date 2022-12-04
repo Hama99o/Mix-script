@@ -1,0 +1,7 @@
+def answers(publish, search)
+  answers = Answer.where(question_id: params[:question_id]).where.not(text: 'Je passe').order(created_at: :desc)
+  publish_options = { "true" => true, true => true, "false" => false, false => false, "null" => nil, nil => nil }
+  publish_filter = publish.present? ? { publish: publish.map{ |option| publish_options[option]} } : {}
+  answers = answers.where(publish_filter)
+  answers = search ? answers.joins(:user).where("text ILIKE :search OR first_name ILIKE :search", search: "%#{search}%") : answers
+end
