@@ -1,0 +1,7 @@
+it "has a 'Delete My account' button" do
+  expect(page).to have_selector "a[href='/users']", text: 'Delete My account'
+
+  expect do
+    click_on('Delete My account')
+  end.to change { User.count }.by(-1)
+end
