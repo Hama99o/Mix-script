@@ -1,0 +1,11 @@
+it 'should change name' do
+  expect do
+    within('#edit_user') do
+      fill_in 'user[name]', with: 'peter'
+      fill_in 'user[current_password]', with: user.password
+      find('#save_user').click
+    end
+  end.to change { user.reload.name }.to 'peter'
+  expect(current_path).to eql(profile_path)
+  expect(page).to have_content 'Your account has been updated successfully.'
+end
