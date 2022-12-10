@@ -1,0 +1,11 @@
+it 'should change email' do
+  expect do
+    within('#edit_user') do
+      fill_in 'user[email]', with: email
+      fill_in 'user[current_password]', with: user.password
+      find('#save_user').click
+    end
+  end.to change { user.reload.email }.to email
+  expect(current_path).to eql(profile_path)
+  expect(page).to have_content 'Your account has been updated successfully.'
+end
