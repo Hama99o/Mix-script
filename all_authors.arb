@@ -1,0 +1,4 @@
+def all_authors
+  fake_authors = self.fake_authors
+  @all_authors = fake_authors.push(author).shuffle
+end
