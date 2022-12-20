@@ -1,0 +1,16 @@
+def self.generate_game(person)
+  quote_api = QuoteApi.new
+  random_quote = quote_api.random_quote_with_fake_authors
+  author = random_quote[:quotes]['quote_author']
+  fake_authors = random_quote[:fake_authors]
+  quote = random_quote[:quotes]['quote_text']
+  quote_id = random_quote[:quotes]['id']
+
+  Game.create({
+    quote: quote,
+    author: author,
+    fake_authors: fake_authors,
+    api_id: quote_id,
+    person: person
+  })
+end
