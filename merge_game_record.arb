@@ -1,0 +1,4 @@
+def merge_game_record(guest_slug, current_user)
+  guest_user = GuestUser.find_by(slug: guest_slug)
+  guest_user.games.update_all(person_type: current_user.class.to_s, person_id: current_user.id)
+end
