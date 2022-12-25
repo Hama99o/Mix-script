@@ -1,0 +1,7 @@
+def person
+  if @person
+    @games = @person.resolved_games.page(params[:page])
+  else
+    redirect_to home_path
+  end
+end
