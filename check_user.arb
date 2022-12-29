@@ -1,0 +1,7 @@
+def check_user
+  @person = if user_signed_in?
+              current_user
+            else
+              GuestUser.find_by(slug: session[:guest_slug]['value'])
+            end
+end
