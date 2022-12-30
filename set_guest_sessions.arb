@@ -1,0 +1,8 @@
+  def set_guest_sessions
+    return if session[:guest_slug]
+
+    guest_user ||= GuestUser.generate_guest_user
+    session[:guest_slug] = {
+      value: guest_user.slug
+    }
+  end
