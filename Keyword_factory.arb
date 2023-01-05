@@ -1,0 +1,9 @@
+require 'rails_helper'
+
+describe Keyword, type: :model do
+  subject { keyword }
+  let(:keyword) { create(:keyword) }
+
+  it { is_expected.to have_many(:trend_report_keywords) }
+  it { is_expected.to have_many(:trend_reports) }
+end
