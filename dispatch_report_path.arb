@@ -1,0 +1,5 @@
+  def dispatch_report_path(report)
+    ActionCable.server.broadcast "delayed_link_channel",
+     { content: { model_id: "export_#{report.id}", path: report_path(report) } }
+    Rails.logger.info "Report ##{report.id} exported"
+  end
