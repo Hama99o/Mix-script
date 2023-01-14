@@ -1,0 +1,4 @@
+def self.create_from_question_id(question_id, bot_name, **args)
+  question = Question.from(bot_name).find(question_id)
+  self.create_from_question(question, **args)
+end
