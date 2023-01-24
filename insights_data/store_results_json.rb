@@ -13,7 +13,4 @@ def upsert_all_resources(resource_name)
   p "#{created_resources.count} #{resource_name} created"
 end
 
-upsert_all_resources('companies')
-upsert_all_resources('company_users')
-upsert_all_resources('company_user_activities')
-upsert_all_resources('trends_activities')
+upsert_all_resources('table-name')
