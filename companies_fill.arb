@@ -1,0 +1,13 @@
+require 'csv'
+
+file = "#{Rails.root}/public/data.csv"
+
+companies = Company.all
+
+companies_headers = ["id", "name", "active", "created_at", "updated_at", "subscribe_expiration", "subscription_kind"]
+
+CSV.open(file, 'w', write_headers: true, headers: companies_headers, quote_char: "\x00", header_converters: :symbol, col_sep: ';') do |writer|
+  companies.each do |product|
+    writer << [product.id, product.name, product.active, product.created_at, product.updated_at, product.subscribe_expiration, product.subscription_kind]
+  end
+end
