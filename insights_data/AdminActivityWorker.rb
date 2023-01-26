@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe AdminActivityWorker, type: :worker do
   subject { AdminActivityWorker.perform_async(event, properties) }
 
-  let(:event) { 'whatever' }
+  let(:event) { 'event for text' }
   let(:properties) do
     {
       'oki' => 'lol',
