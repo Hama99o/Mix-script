@@ -1,0 +1,8 @@
+
+  def motivation_init_state(_payload)
+    if motivation = extract_motivation
+      return redirect_to :motivation_random, motivation: motivation
+    else
+      return redirect_to :motivation_no_more_end
+    end
+  end
