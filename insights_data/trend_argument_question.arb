@@ -1,0 +1,7 @@
+def trend_argument_question
+  if @report.trend_report.present? && @report.trend_report.with_argument
+    @report.trend_report.argument_question
+  else
+    nil
+  end
+end
