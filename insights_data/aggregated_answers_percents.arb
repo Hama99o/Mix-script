@@ -1,0 +1,3 @@
+def aggregated_answers_percents
+  @aggregated_answers_percents ||= @report.rounded_aggregated_answers_percents
+end
