@@ -1,0 +1,4 @@
+  def verbatims_validation
+    return if self.verbatims.blank?
+    self.verbatims = self.verbatims.select { |v| v['text'].strip.present? }
+  end
