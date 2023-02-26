@@ -1,0 +1,14 @@
+def remove_consecutive_duplicates(s)
+  last_word = ''
+  result = []
+  array = s.split(' ')
+  array.each do |str|
+    if last_word != str
+       result.push(str)
+    end
+
+    last_word = str
+  end
+
+  return result.join(' ')
+end
