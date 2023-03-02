@@ -1,0 +1,62 @@
+
+  def increment_hash_with_dimensions(hash, dimension_values, increment_by: 1)
+    dimension_values.each do |dim_key, dim_val|
+      hash[dim_key] = { dim_val => 0 } if hash[dim_key].blank?
+      hash[dim_key][dim_val] = 0 if hash[dim_key][dim_val].blank?
+      hash[dim_key][dim_val] += increment_by
+    end
+  end
+
+  def all_dimensions_keys
+    all_dimensions_keys = [:gender, :age, :large_region, :agglomeration_size, :occupation, :region]
+    all_dimensions_keys.concat(panel.poll_questions.where(open: false).pluck(:question_id)) if panel && panel.poll_questions
+    all_dimensions_keys
+  end
+
+  def dimensions
+    {
+      gender: gender_categories,
+      age: age_categories_string,
+      large_region: large_regions,
+      agglomeration_size: agglomeration_sizes,
+      occupation: occupations,
+      region: regions,
+    }.slice(*selected_dimensions.map(&:to_sym)).merge(closed_question_quick_replies_by_id)
+  end
+
+  def closed_question_quick_replies_by_id
+    questions_id = selected_dimensions.select { |s| s.match?(/\A\d+\z/) }.map(&:to_i)
+
+    Question.from(bot_name).where(id: questions_id).select { |q| q.open == false }.map do |q|
+      [q.id, q.quick_replies]
+    end.to_h
+  end
+
+  def close_question_dimensions(report_users)
+    questions_id = selected_dimensions.select { |s| s.match?(/\A\d+\z/) }.map(&:to_i)
+
+    Question.from(bot_name).where(id: questions_id).select { |q| q.open == false }.map do |q|
+      [q.id, answers_with_percentages(q, report_users)]
+    end.to_h
+  end
+
+  def answers_with_percentages(question, report_users)
+    # calculate percentage for each answer option
+    answers_with_percentage = {}
+
+    question.quick_replies.each do |option|
+      option_count = 0
+      total_answers = 0
+
+      report_users.each do |report_user|
+        user_answers = question.answers.where(user_id: report_user.user_id)
+        total_answers += user_answers.length
+        option_count += user_answers.select { |a| a.text == option }.length
+      end
+
+      option_percentage = percent(option_count, total_answers)
+      answers_with_percentage[option] = option_count
+    end
+
+    answers_with_percentage
+  end
