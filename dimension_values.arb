@@ -1,0 +1,20 @@
+dimension_values = {:gender=>"male", :age=>"15-18", :large_region=>"Île de France", :agglomeration_size=>"Agglo parisienne", :occupation=>"studying", :sondage_belle_theme1=>{"Carrément 💸"=>1, "Un peu 🙄"=>0, "Déjà au max 😅"=>0, "Pas du tout 😇"=>0}}
+
+hash = {}
+increment_by = 1
+
+dimension_values.each do |dim_key, dim_val|
+  if dim_key == :sondage_belle_theme1
+    dim_val.each do |sub_key, sub_val|
+      hash[dim_key] = {} if hash[dim_key].blank?
+      hash[dim_key][sub_key] = 0 if hash[dim_key][sub_key].blank?
+      hash[dim_key][sub_key] += increment_by
+    end
+  else
+    hash[dim_key] = { dim_val => 0 } if hash[dim_key].blank?
+    hash[dim_key][dim_val] = 0 if hash[dim_key][dim_val].blank?
+    hash[dim_key][dim_val] += increment_by
+  end
+end
+
+puts hash
