@@ -1,0 +1,14 @@
+def encode(plaintext)
+  alphabet = ('a'..'z').to_a
+  result = []
+
+  plaintext.split('').each do |s|
+    if s.count("a-zA-Z") > 0
+      result.push(alphabet.find_index(s.downcase) % 2)
+    else
+      result.push(s)
+    end
+  end
+
+  result.join('')
+end
