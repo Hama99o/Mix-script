@@ -1,0 +1,19 @@
+def decipher_this(string)
+  string_array = string.split(' ')
+  result = []
+  string_array.each_with_index do |x, index|
+    resultt = []
+    resultt.push(x.split('').select { |xx| /\A\d+\z/.match(xx) }.join.to_i.chr)
+    x.split('').select { |xx| !/\A\d+\z/.match(xx) }.each_with_index do |y, indexx|
+      if indexx == 0
+        resultt.push(x.split('')[-1])
+      elsif indexx == (x.split('').select { |xx| !/\A\d+\z/.match(xx) }.length - 1)
+        resultt.push(x.split('').select { |xx| !/\A\d+\z/.match(xx) }[0])
+      else
+         resultt.push(y)
+      end
+    end
+    result.push(resultt.join)
+  end
+  result.join(' ')
+end
