@@ -1,0 +1,14 @@
+def swap_ruby(st)
+  result = ''
+
+  st.each_char do |x|
+    vowels = 'aeiou'
+    if vowels.include?(x)
+      result += x.upcase
+    else
+      result += x
+    end
+  end
+
+  result
+end
