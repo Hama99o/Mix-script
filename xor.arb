@@ -1,0 +1,10 @@
+def xor(a,b)
+
+  if a == true && b == false
+    true
+  elsif b == true && a == false
+    true
+  else
+    false
+  end
+end
