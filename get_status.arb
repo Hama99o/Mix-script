@@ -1,0 +1,5 @@
+def get_status(is_busy)
+    hash = {}
+    hash['status'] = is_busy ? "busy" : "available"
+    return hash
+end
