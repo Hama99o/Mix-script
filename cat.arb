@@ -1,0 +1,11 @@
+class Cat < Animal
+  #your code here
+
+  def initialize(cat)
+    @cat = cat
+  end
+
+  def speak()
+    "#{@cat} meows."
+  end
+end
