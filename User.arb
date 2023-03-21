@@ -1,26 +1,31 @@
-require 'rails_helper'
-
-RSpec.describe User, type: :model do
+describe "#active_subscriptions" do
   let(:user) { create(:user) }
-  let(:active_subscription) { create(:subscription, :active) }
-  let(:inactive_subscription) { create(:subscription, :inactive) }
+  let(:subscription_weekend) { create(:subscription, name: 'Weekend', users: [user]) }
+  let(:subscription_weekdays) { create(:subscription, name: 'Weekdays', users: [user]) }
 
-  describe '#active_subscriptions' do
-    it 'returns active subscriptions' do
-      active_subscription.subscriptions_users.create(user: user)
-      inactive_subscription.subscriptions_users.create(user: user, closed_at: Time.now)
-
-      expect(user.active_subscriptions).to eq([active_subscription])
-    end
+  before do
+    user.subscriptions_users.find_by_subscription_id(subscription_weekend.id).update(closed_at: Time.now)
+    subscription_weekdays
   end
 
-  describe '#active_subscription_ids' do
-    it 'returns active subscription ids' do
-      active_subscription.subscriptions_users.create(user: user)
-      inactive_subscription.subscriptions_users.create(user: user, closed_at: Time.now)
-
-      expect(user.active_subscription_ids).to eq([active_subscription.id])
-    end
+  it "returns active subscriptions" do
+    expect(user.active_subscriptions).to eq([subscription_weekdays])
+    expect(user.active_subscriptions).not_to eq([subscription_weekend])
   end
 end
 
+describe "#active_subscription_ids" do
+  let(:user) { create(:user) }
+  let(:subscription_weekend) { create(:subscription, name: 'Weekend', users: [user]) }
+  let(:subscription_weekdays) { create(:subscription, name: 'Weekdays', users: [user]) }
+
+  before do
+    user.subscriptions_users.find_by_subscription_id(subscription_weekend.id).update(closed_at: Time.now)
+    subscription_weekdays
+  end
+
+  it "returns active subscriptions ids" do
+    expect(user.active_subscription_ids).to eq([subscription_weekdays.id])
+    expect(user.active_subscription_ids).not_to eq([subscription_weekend.id])
+  end
+end
